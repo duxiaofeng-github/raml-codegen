@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "meow": "^5.0.0",
+    "prompt-confirm": "^2.0.4",
+    "raml-1-parser": "^1.1.48",
+    "rimraf": "^2.6.2",
+    "ts-simple-ast": "^17.1.0"
+  },
+  "name": "raml-codegen",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

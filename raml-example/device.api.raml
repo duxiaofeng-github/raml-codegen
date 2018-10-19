@@ -1,0 +1,97 @@
+#%RAML 1.0
+
+title: 设备管理API
+mediaType: application/json
+baseUri: /api/cores/plants/{plantId}/devices
+version: v1
+
+uses:
+  models: device.model.raml
+
+/:
+  get:
+    description: 设备列表
+    queryParameters:
+      offset?: number
+      limit?: number
+      keyword?:
+        type: string
+        description: 查询code和name
+      state?:
+        type: number
+        enum: [1, 2, 3, 4]
+        description: 1 正常 2 维护 3 故障 4 停用
+      categoryId?:
+        type: string
+        description: 设备类型Id
+    responses:
+      200:
+        body:
+          type: models.ListDevice
+
+  post:
+    description: 新建设备
+    body:
+      type: models.CreateDevice
+
+  /{deviceId}:
+    get:
+      description: 设备详情
+      responses:
+        200:
+          body:
+            type: models.Device
+    
+    put:
+      description: 更新设备
+      body:
+        type: models.CreateDevice
+
+    delete:
+      description: 删除设备
+
+    /deleted:
+      delete:
+        description: 恢复设备
+
+  /imports:
+    description: 导入设备
+
+    /template:
+      get:
+        description: 下载模板
+        responses:
+          200:
+            body:
+              application/octet-stream:
+                type: file
+    
+    /validate:
+      post:
+        description: 验证数据
+        body:
+          multipart/form-data:
+            properties:
+              text: string
+              file1:
+                type: file
+                fileTypes: ['application/octet-stream']
+        responses: 
+          200:
+            body:
+              type: models.importValidateResult
+
+    /process:
+      post:
+        description: 完成数据导入
+        body:
+          multipart/form-data:
+            properties:
+              text: string
+              file1:
+                type: file
+                fileTypes: ['application/octet-stream']
+        responses: 
+          200:
+            body:
+              type: models.importProcessResult

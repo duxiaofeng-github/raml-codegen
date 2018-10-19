@@ -1,0 +1,75 @@
+#%RAML 1.0 Library
+
+usage: Device api models
+
+types:
+  Device:
+    type: CreateDevice
+    properties:
+      id: string
+      deleted: string
+      createdAt: datetime-only
+      updatedAt: datetime-only
+
+  ListDevice:
+    type: object
+    properties:
+      result: Device[]
+      offset: number
+      limit: number
+      total: number
+
+  CreateDevice:
+    type: object
+    properties:
+      code: string
+      name: string
+      description?: string
+      state:
+        type: number
+        enum: [1, 2, 3, 4]
+      attributes:
+        type: object
+        properties:
+          regionId: string
+          supplierId: string
+          departmentId: string
+          dateOfPurchase: datetime-only
+          dateOfManufacture: datetime-only
+      model: string
+      macaddr: string
+      ip: string
+      categoryId: string
+      sn: string
+
+  importProcessResult:
+    type: object
+    properties:
+      deviceCount: number
+      categoryCount: number
+      supplierCount: number
+      departmentCount: number
+  
+  importValidateResult:
+    type: importProcessResult
+    properties:
+      devices:
+        type: array
+        items:
+          type: array
+          items: string
+      category:
+        type: array
+        items:
+          type: array
+          items: string
+      suppliers:
+        type: array
+        items:
+          type: array
+          items: string
+      departments:
+        type: array
+        items:
+          type: array
+          items: string
